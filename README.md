@@ -137,8 +137,15 @@ histories readable side by side.
 `aLLMchemy/DEVELOPING.md` is the authoritative contract for changes to the package. This
 file covers only the lab.
 
-**Neither repo has branch protection enabled yet.** Until it is, the rule is only as strong
-as this document — direct pushes still work, so follow it deliberately.
+**Both repos enforce this with a GitHub ruleset**, so it is not a convention you can forget:
+a direct push to `main` is rejected with "Changes must be made through a pull request". Both
+allow squash merges only, take the PR title as the commit subject, and delete the branch on
+merge. The repository-admin bypass is scoped to `pull_request`, meaning an admin can merge a
+PR that is missing a check but still cannot push to `main` directly.
+
+`aLLMchemy` additionally requires three checks to pass: `conventional`,
+`check (ubuntu-latest)` and `check (macos-latest)`. This repo has no CI, so it requires none
+— requiring a check that never runs would block every PR forever.
 
 ## `.worktrees/opencode-multi-backend`
 
