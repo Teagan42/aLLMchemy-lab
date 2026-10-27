@@ -98,8 +98,8 @@ say ""
 say "Remote:"
 case "$REMOTE" in
   git@*)
-    # Captured, not piped: `ssh -T git@github.com` exits 1 even on success because GitHub
-    # closes the connection, and under `pipefail` that status outranks grep's match.
+    # Captured, not piped: github.com provides no shell access, so `ssh -T` exits 1 even
+    # when the key authenticates, and under `pipefail` that status outranks grep's match.
     SSH_OUT=$(ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 \
                   -T git@github.com 2>&1) || :
     case "$SSH_OUT" in
