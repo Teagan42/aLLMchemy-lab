@@ -17,9 +17,6 @@ ignored by this repository.
 .claude/settings.json the inverse config: questions and plan mode permitted
 aLLMchemy/            the project itself (separate remote, ignored here)
 .worktrees/           detached scratch checkouts
-claude-findings.md    review of the package — 15 findings
-codex-findings.md     second review — 5 findings, one overlapping
-run-mlx.py            MLX inference scratch
 ```
 
 ## What `.claude/settings.json` inverts
