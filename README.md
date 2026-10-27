@@ -113,6 +113,40 @@ covers the lab's own configuration.
 Never run `bin/run-claude.sh`, `bin/run-codex.sh` or `bin/run-factory.sh` to try something
 out. They provision real infrastructure and spend real money, and there is no dry-run flag.
 
+## Making changes
+
+Both repositories use the same flow, and neither takes commits straight to `main`.
+
+```sh
+git fetch origin
+git switch -c docs/short-slug origin/main    # from origin/main, not a stale local main
+...change, commit...
+git push -u origin HEAD
+gh pr create --fill
+```
+
+Branch from `origin/main` rather than local `main`: a branch cut from a stale ref carries
+already-merged commits, and in `aLLMchemy` the `commits` workflow then validates a range
+that is not what you changed.
+
+In `aLLMchemy` the PR title must be a conventional subject (`feat:`, `fix:`, `docs:` …)
+because a squash merge uses it as the commit subject and `release-please` reads it to pick
+the next version. This repository has no such gate, but the same shape keeps the two
+histories readable side by side.
+
+`aLLMchemy/DEVELOPING.md` is the authoritative contract for changes to the package. This
+file covers only the lab.
+
+**Both repos enforce this with a GitHub ruleset**, so it is not a convention you can forget:
+a direct push to `main` is rejected with "Changes must be made through a pull request". Both
+allow squash merges only, take the PR title as the commit subject, and delete the branch on
+merge. The repository-admin bypass is scoped to `pull_request`, meaning an admin can merge a
+PR that is missing a check but still cannot push to `main` directly.
+
+`aLLMchemy` additionally requires three checks to pass: `conventional`,
+`check (ubuntu-latest)` and `check (macos-latest)`. This repo has no CI, so it requires none
+— requiring a check that never runs would block every PR forever.
+
 ## `.worktrees/opencode-multi-backend`
 
 Plain files, not a git worktree — a detached copy of another session's in-flight work adding
