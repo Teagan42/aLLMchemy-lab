@@ -10,3 +10,7 @@ aLLMchemy/
 # Model and inference scratch output.
 *.log
 artifacts/
+
+# Editor and OS droppings.
+.DS_Store
+*.swp
