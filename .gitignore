@@ -1,0 +1,12 @@
+# aLLMchemy is its own repository, checked out here for convenience.
+aLLMchemy/
+
+# Detached worktrees and scratch checkouts.
+.worktrees/
+
+# Local Python environment for the MLX experiments.
+.venv/
+
+# Model and inference scratch output.
+*.log
+artifacts/
