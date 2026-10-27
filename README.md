@@ -14,10 +14,33 @@ So the lab lives one directory up, with its own settings, and `aLLMchemy/` is a 
 ignored by this repository.
 
 ```
+setup.sh              clone aLLMchemy and bootstrap its dev tooling
 .claude/settings.json the inverse config: questions and plan mode permitted
 aLLMchemy/            the project itself (separate remote, ignored here)
 .worktrees/           detached scratch checkouts
 ```
+
+## From a bare clone
+
+```sh
+git clone git@github.com:Teagan42/aLLMchemy-lab.git && cd aLLMchemy-lab
+./setup.sh              # clone aLLMchemy, pin authorship, run its bootstrap
+./setup.sh --hooks      # ...and install its pre-commit hook
+./setup.sh --check      # ...and run the full suite (~70s)
+```
+
+It checks the required tools before touching anything, names what each optional one buys,
+then delegates the package's own bootstrap to `aLLMchemy/dev/setup.sh` rather than
+reimplementing it — a second copy would drift from the first.
+
+Authorship is pinned per-repository on both this repo and the clone, because a fresh clone
+otherwise inherits the machine's global git identity and commits land attributed to an
+unrelated address.
+
+It is deliberately timid about an existing `aLLMchemy/`: it fetches and reports whether the
+tree is dirty or behind, and never resets, cleans, pulls or force-updates. It refuses
+outright if the directory is not a git repository or points at an unexpected remote, since
+this directory also holds detached scratch work that must not be clobbered.
 
 ## What `.claude/settings.json` inverts
 
