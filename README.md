@@ -113,6 +113,33 @@ covers the lab's own configuration.
 Never run `bin/run-claude.sh`, `bin/run-codex.sh` or `bin/run-factory.sh` to try something
 out. They provision real infrastructure and spend real money, and there is no dry-run flag.
 
+## Making changes
+
+Both repositories use the same flow, and neither takes commits straight to `main`.
+
+```sh
+git fetch origin
+git switch -c docs/short-slug origin/main    # from origin/main, not a stale local main
+...change, commit...
+git push -u origin HEAD
+gh pr create --fill
+```
+
+Branch from `origin/main` rather than local `main`: a branch cut from a stale ref carries
+already-merged commits, and in `aLLMchemy` the `commits` workflow then validates a range
+that is not what you changed.
+
+In `aLLMchemy` the PR title must be a conventional subject (`feat:`, `fix:`, `docs:` …)
+because a squash merge uses it as the commit subject and `release-please` reads it to pick
+the next version. This repository has no such gate, but the same shape keeps the two
+histories readable side by side.
+
+`aLLMchemy/DEVELOPING.md` is the authoritative contract for changes to the package. This
+file covers only the lab.
+
+**Neither repo has branch protection enabled yet.** Until it is, the rule is only as strong
+as this document — direct pushes still work, so follow it deliberately.
+
 ## `.worktrees/opencode-multi-backend`
 
 Plain files, not a git worktree — a detached copy of another session's in-flight work adding
